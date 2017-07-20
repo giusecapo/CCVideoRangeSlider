@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     
     var startTime = 0.0
     var endTime = 10.0
+    
+    var delegate: CCVideoRangeSliderDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,13 +143,12 @@ class ViewController: UIViewController {
      I remove the 20% (in seconds) of 120s > 120s - 20%(120) = 96s
     */
     
-    let total = 100
-    
     func readCurrentValue(){
-        calcTime()
+        let values = calcTime()
+        delegate?.didChangeValue(startTime: Float(values.startTime), endTime: Float(values.endTime))
     }
     
-    func calcTime(){
+    func calcTime() -> (startTime: Double, endTime: Double){
         let widthOnTotal = (Double(rangeSelected!.frame.width) * 100)/Double(rangeSelectionOriginalWidth!)
         
         let currentStartOriginX = pickerLeft!.frame.origin.x + pickerLeft!.frame.width
@@ -156,18 +157,38 @@ class ViewController: UIViewController {
         let currentEndOriginX = pickerRight?.frame.origin.x
         let currentEndOnTotal = (Double(currentEndOriginX!) * endTime)/Double(rangeSelectionOriginalWidth!) - 1
         
+        // Test purpose
         updateLabels(percentage: widthOnTotal, startTime: currentStartOnTotal, endTime: currentEndOnTotal)
+        
+        let roundedValue = getRoundedValues(startTime: currentStartOnTotal, endTime: currentEndOnTotal)
+        
+        return roundedValue
     }
     
     @IBOutlet weak var startTimeLabel: UILabel!
     @IBOutlet weak var endTimeLabel: UILabel!
     @IBOutlet weak var percentageLabel: UILabel!
     
-    func updateLabels(percentage: Double, startTime: Double, endTime: Double){
+    func getRoundedValues(startTime: Double, endTime: Double) -> (startTime: Double, endTime: Double){
         var cStartTime = startTime
         var cEndTime = endTime
         
         // Skip 0.2
+
+        if cStartTime < self.startTime || cStartTime - 0.2 <= self.startTime {
+            cStartTime = self.startTime
+        }
+        if cEndTime > self.endTime || cEndTime + 0.2 >= self.endTime{
+            cEndTime = self.endTime
+        }
+        
+        return (cStartTime, cEndTime)
+    }
+    
+    func updateLabels(percentage: Double, startTime: Double, endTime: Double){
+        var cStartTime = startTime
+        var cEndTime = endTime
+        
         
         if cStartTime < self.startTime || cStartTime - 0.2 <= self.startTime {
             cStartTime = self.startTime
