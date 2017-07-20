@@ -1,18 +1,14 @@
 //
-//  ViewController.swift
+//  CCVideoRangeSlider.swift
 //  slider
 //
-//  Created by Giuseppe Capoluongo on 19/07/17.
+//  Created by Giuseppe Capoluongo on 20/07/17.
 //  Copyright © 2017 Giuseppe Capoluongo. All rights reserved.
 //
 
 import UIKit
 
-protocol CCVideoRangeSliderDelegate {
-    func didChangeValue(startTime: Float, endTime: Float)
-}
-
-class ViewController: UIViewController, CCVideoRangeSliderDelegate {
+class CCVideoRangeSlider: UIView {
     
     // MARK: - Colors
     let lightBlue = UIColor(red: 0, green: 119/255, blue: 1, alpha: 0.5)
@@ -22,26 +18,13 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
     var endTime = 10.0
     
     var delegate: CCVideoRangeSliderDelegate?
+    
+    func initSlider(startTime: Float, endTime: Float){
+        self.startTime = Double(startTime)
+        self.endTime = Double(endTime)
+        customGraphics()
+    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //customGraphics()
-        initSlider()
-    }
-    
-    @IBOutlet weak var videoRangeSlider: CCVideoRangeSlider!
-    
-    func initSlider(){
-        videoRangeSlider.delegate = self
-        videoRangeSlider.initSlider(startTime: 0.0, endTime: 9.0)
-    }
-    
-    func didChangeValue(startTime: Float, endTime: Float) {
-        print(startTime, endTime)
-    }
-    
-    @IBOutlet weak var containerView: UIView!
-    
     var rangeSelected: UIView?
     var pickerLeft: UIView?
     var pickerRight: UIView?
@@ -60,7 +43,7 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
     
     func customGraphics(){
         
-        let viewWidth = Int(containerView.frame.width)
+        let viewWidth = Int(self.frame.width)
         
         let viewHeight = 65
         let rangeBackground = UIView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
@@ -105,7 +88,7 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
         
         resizeSelectedZone()
         
-        containerView.addSubview(rangeBackground)
+        self.addSubview(rangeBackground)
     }
     
     func saveLastLocation(){
@@ -153,7 +136,7 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
      Do this by calc the percentage:
      If I have a 2 mins video
      I remove the 20% (in seconds) of 120s > 120s - 20%(120) = 96s
-    */
+     */
     
     func readCurrentValue(){
         let values = calcTime()
@@ -161,7 +144,7 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
     }
     
     func calcTime() -> (startTime: Double, endTime: Double){
-        let widthOnTotal = (Double(rangeSelected!.frame.width) * 100)/Double(rangeSelectionOriginalWidth!)
+//        let widthOnTotal = (Double(rangeSelected!.frame.width) * 100)/Double(rangeSelectionOriginalWidth!) ** PERCENTAGE TO CUT - TEST PURPOSE
         
         let currentStartOriginX = pickerLeft!.frame.origin.x + pickerLeft!.frame.width
         let currentStartOnTotal = (Double(currentStartOriginX) * endTime)/Double(rangeSelectionOriginalWidth!) - 1
@@ -169,24 +152,17 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
         let currentEndOriginX = pickerRight?.frame.origin.x
         let currentEndOnTotal = (Double(currentEndOriginX!) * endTime)/Double(rangeSelectionOriginalWidth!) - 1
         
-        // Test purpose
-        updateLabels(percentage: widthOnTotal, startTime: currentStartOnTotal, endTime: currentEndOnTotal)
-        
         let roundedValue = getRoundedValues(startTime: currentStartOnTotal, endTime: currentEndOnTotal)
         
         return roundedValue
     }
-    
-    @IBOutlet weak var startTimeLabel: UILabel!
-    @IBOutlet weak var endTimeLabel: UILabel!
-    @IBOutlet weak var percentageLabel: UILabel!
     
     func getRoundedValues(startTime: Double, endTime: Double) -> (startTime: Double, endTime: Double){
         var cStartTime = startTime
         var cEndTime = endTime
         
         // Skip 0.2
-
+        
         if cStartTime < self.startTime || cStartTime - 0.2 <= self.startTime {
             cStartTime = self.startTime
         }
@@ -197,32 +173,15 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
         return (cStartTime, cEndTime)
     }
     
-    func updateLabels(percentage: Double, startTime: Double, endTime: Double){
-        var cStartTime = startTime
-        var cEndTime = endTime
-        
-        
-        if cStartTime < self.startTime || cStartTime - 0.2 <= self.startTime {
-            cStartTime = self.startTime
-        }
-        if cEndTime > self.endTime || cEndTime + 0.2 >= self.endTime{
-            cEndTime = self.endTime
-        }
-        
-        percentageLabel.text = "\(Int(percentage))%"
-        startTimeLabel.text = "\(cStartTime.roundTo(places: 2))"
-        endTimeLabel.text = "\(cEndTime.roundTo(places: 2))"
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         saveLastLocation()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 
+extension Double {
+    /// Rounds the double to decimal places value
+    func roundTo(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}

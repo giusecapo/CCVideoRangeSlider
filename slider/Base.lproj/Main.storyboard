@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6H-yO-DGR">
+                            <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6H-yO-DGR" customClass="CCVideoRangeSlider" customModule="slider" customModuleProvider="target">
                                 <rect key="frame" x="16" y="296" width="343" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -81,6 +81,7 @@
                         <outlet property="endTimeLabel" destination="P1l-Se-Weo" id="phF-CL-3ZC"/>
                         <outlet property="percentageLabel" destination="Zre-Sq-VPU" id="zHw-ts-4Rb"/>
                         <outlet property="startTimeLabel" destination="WX7-up-uBl" id="r3q-lw-t2z"/>
+                        <outlet property="videoRangeSlider" destination="H6H-yO-DGR" id="L9A-tu-Aza"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

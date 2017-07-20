@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E1FFC3F1F20959800414214 /* CCVideoRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1FFC3E1F20959800414214 /* CCVideoRangeSlider.swift */; };
 		6E398FDA1F1F553B0020DE95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E398FD91F1F553B0020DE95 /* AppDelegate.swift */; };
 		6E398FDC1F1F553B0020DE95 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E398FDB1F1F553B0020DE95 /* ViewController.swift */; };
 		6E398FDF1F1F553B0020DE95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E398FDD1F1F553B0020DE95 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E1FFC3E1F20959800414214 /* CCVideoRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCVideoRangeSlider.swift; sourceTree = "<group>"; };
 		6E398FD61F1F553B0020DE95 /* slider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E398FD91F1F553B0020DE95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E398FDB1F1F553B0020DE95 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				6E398FE51F1F553B0020DE95 /* LaunchScreen.storyboard */,
 				6E398FE81F1F553B0020DE95 /* Info.plist */,
 				6E398FE01F1F553B0020DE95 /* slider.xcdatamodeld */,
+				6E1FFC3E1F20959800414214 /* CCVideoRangeSlider.swift */,
 			);
 			path = slider;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E1FFC3F1F20959800414214 /* CCVideoRangeSlider.swift in Sources */,
 				6E398FE21F1F553B0020DE95 /* slider.xcdatamodeld in Sources */,
 				6E398FDC1F1F553B0020DE95 /* ViewController.swift in Sources */,
 				6E398FDA1F1F553B0020DE95 /* AppDelegate.swift in Sources */,
