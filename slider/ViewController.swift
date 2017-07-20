@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol CCVideoRangeSliderDelegate {
-    func didChangeValue(startTime: Float, endTime: Float)
-}
-
 class ViewController: UIViewController, CCVideoRangeSliderDelegate {
     
     // MARK: - Colors

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CCVideoRangeSliderDelegate {
+    func didChangeValue(startTime: Float, endTime: Float)
+}
+
 class CCVideoRangeSlider: UIView {
     
     // MARK: - Colors
@@ -170,7 +174,7 @@ class CCVideoRangeSlider: UIView {
             cEndTime = self.endTime
         }
         
-        return (cStartTime, cEndTime)
+        return (cStartTime.roundTo(places: 2), cEndTime.roundTo(places: 2))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
