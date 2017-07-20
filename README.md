@@ -25,6 +25,15 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
 }
 ```
 
+Implement this function in your controller to read new values each time they're updated
+
+```swift
+func didChangeValue(startTime: Float, endTime: Float) {
+        print(startTime, endTime)
+        // Do whatever you want with new values
+    }
+```
+
 ## Coming soon:
 
 - Change both range and indicators colors
