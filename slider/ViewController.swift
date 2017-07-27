@@ -99,9 +99,17 @@ class ViewController: UIViewController, CCVideoRangeSliderDelegate {
         rangeBackground.addSubview(pickerLeft!)
         rangeBackground.addSubview(pickerRight!)
         
+        // Create time labels
+        let timeLabelLeft = UIView(frame: CGRect(x: 0, y: -5, width: 100, height: 50))
+        timeLabelLeft.backgroundColor = .black
+        
+//        timeLabelLeft.text = "0.00"
+        
         resizeSelectedZone()
         
         containerView.addSubview(rangeBackground)
+        
+        rangeBackground.addSubview(timeLabelLeft)
     }
     
     func saveLastLocation(){

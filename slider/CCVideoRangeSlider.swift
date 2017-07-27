@@ -45,6 +45,9 @@ class CCVideoRangeSlider: UIView {
     var maxRightDraggableX: Int?
     var maxLeftDraggableX: Int?
     
+    var timeLabelStart: UILabel?
+    var timeLabelEnd: UILabel?
+    
     func customGraphics(){
         
         let viewWidth = Int(self.frame.width)
@@ -92,6 +95,18 @@ class CCVideoRangeSlider: UIView {
         
         resizeSelectedZone()
         
+        // Create time labels
+        let timeLabelHeight = 30
+        let timeLabelWidth = 50
+        
+        timeLabelStart = UILabel(frame: CGRect(x: pickerStartX!, y: -(10+timeLabelHeight), width: timeLabelWidth, height: timeLabelHeight))
+        timeLabelStart?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
+        
+        timeLabelStart?.text = "0:00"
+        timeLabelStart?.textAlignment = .center
+        
+        rangeBackground.addSubview(timeLabelStart!)
+        
         self.addSubview(rangeBackground)
     }
     
@@ -129,6 +144,7 @@ class CCVideoRangeSlider: UIView {
         let toMove = pickerLeftLastX! + Int(translation.x)
         if toMove > minLeftDraggableX! && toMove < maxLeftDraggableX!{
             recognizer.view?.center.x = CGFloat(toMove)
+            timeLabelStart?.frame.origin.x = CGFloat(toMove) - (recognizer.view?.frame.width)!/2
         }
         resizeSelectedZone()
         readCurrentValue()
@@ -156,6 +172,8 @@ class CCVideoRangeSlider: UIView {
         let currentEndOriginX = pickerRight?.frame.origin.x
         let currentEndOnTotal = (Double(currentEndOriginX!) * endTime)/Double(rangeSelectionOriginalWidth!) - 1
         
+        updateLabels(startTime: currentStartOnTotal, endTime: currentEndOnTotal)
+        
         let roundedValue = getRoundedValues(startTime: currentStartOnTotal, endTime: currentEndOnTotal)
         
         return roundedValue
@@ -175,6 +193,20 @@ class CCVideoRangeSlider: UIView {
         }
         
         return (cStartTime.roundTo(places: 2), cEndTime.roundTo(places: 2))
+    }
+    
+    func updateLabels(startTime: Double, endTime: Double){
+        var cStartTime = startTime
+        var cEndTime = endTime
+        
+        if cStartTime < self.startTime || cStartTime - 0.2 <= self.startTime {
+            cStartTime = self.startTime
+        }
+        if cEndTime > self.endTime || cEndTime + 0.2 >= self.endTime{
+            cEndTime = self.endTime
+        }
+        
+        timeLabelStart?.text = "\(cStartTime.roundTo(places: 2))"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
